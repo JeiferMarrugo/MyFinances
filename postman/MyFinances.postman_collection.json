@@ -1,0 +1,235 @@
+{
+  "info": {
+    "name": "MyFinances API",
+    "description": "Colección para probar la API de MyFinances desde Postman.\n\n1. Ejecuta \"Auth · Iniciar sesión\".\n2. Verifica con \"Auth · Sesión actual\".\n3. Prueba el resto de endpoints.",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "variable": [
+    {
+      "key": "baseUrl",
+      "value": "http://localhost:3000"
+    },
+    {
+      "key": "email",
+      "value": "tu@correo.com"
+    },
+    {
+      "key": "password",
+      "value": "tu-contraseña"
+    },
+    {
+      "key": "cronSecret",
+      "value": "your-cron-secret-min-32-chars"
+    },
+    {
+      "key": "transactionId",
+      "value": "uuid-del-movimiento"
+    }
+  ],
+  "item": [
+    {
+      "name": "Meta",
+      "item": [
+        {
+          "name": "Health",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": "{{baseUrl}}/api/health"
+          }
+        },
+        {
+          "name": "Docs",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": "{{baseUrl}}/api/docs"
+          }
+        }
+      ]
+    },
+    {
+      "name": "Auth",
+      "item": [
+        {
+          "name": "Auth · Iniciar sesión",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"email\": \"{{email}}\",\n  \"password\": \"{{password}}\"\n}"
+            },
+            "url": "{{baseUrl}}/api/auth/sign-in/email"
+          }
+        },
+        {
+          "name": "Auth · Sesión actual",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": "{{baseUrl}}/api/auth/get-session"
+          }
+        }
+      ]
+    },
+    {
+      "name": "Reportes",
+      "item": [
+        {
+          "name": "Reportes · JSON (mes)",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/api/reports?period=month",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "reports"],
+              "query": [
+                { "key": "period", "value": "month" }
+              ]
+            }
+          }
+        },
+        {
+          "name": "Reportes · Export CSV",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/api/reports/export?period=month&format=csv",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "reports", "export"],
+              "query": [
+                { "key": "period", "value": "month" },
+                { "key": "format", "value": "csv" }
+              ]
+            }
+          }
+        },
+        {
+          "name": "Reportes · Export Excel",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/api/reports/export?period=month&format=xlsx",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "reports", "export"],
+              "query": [
+                { "key": "period", "value": "month" },
+                { "key": "format", "value": "xlsx" }
+              ]
+            }
+          }
+        },
+        {
+          "name": "Reportes · Export PDF",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/api/reports/export?period=month&format=pdf",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "reports", "export"],
+              "query": [
+                { "key": "period", "value": "month" },
+                { "key": "format", "value": "pdf" }
+              ]
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "Movimientos",
+      "item": [
+        {
+          "name": "Movimientos · Listar",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": "{{baseUrl}}/api/transactions"
+          }
+        },
+        {
+          "name": "Movimientos · Crear gasto",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"type\": \"expense\",\n  \"title\": \"Supermercado\",\n  \"category\": \"Alimentación\",\n  \"method\": \"Tarjeta débito\",\n  \"amount\": 85000,\n  \"occurredAt\": \"2026-09-17T12:00:00.000Z\"\n}"
+            },
+            "url": "{{baseUrl}}/api/transactions"
+          }
+        },
+        {
+          "name": "Movimientos · Plan de cuotas",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": "{{baseUrl}}/api/transactions/{{transactionId}}/payment-plan"
+          }
+        }
+      ]
+    },
+    {
+      "name": "Configuración",
+      "item": [
+        {
+          "name": "Finance settings · GET",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": "{{baseUrl}}/api/finance-settings"
+          }
+        },
+        {
+          "name": "Savings goals · GET",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": "{{baseUrl}}/api/savings-goals"
+          }
+        },
+        {
+          "name": "Merchants · GET",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": "{{baseUrl}}/api/merchants"
+          }
+        }
+      ]
+    },
+    {
+      "name": "Cron",
+      "item": [
+        {
+          "name": "Payment reminders",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{cronSecret}}"
+              }
+            ],
+            "url": "{{baseUrl}}/api/cron/payment-reminders"
+          }
+        }
+      ]
+    }
+  ]
+}
