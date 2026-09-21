@@ -15,6 +15,7 @@ import {
   getNextInstallmentPaymentDate,
   isCreditInstallmentExpense,
 } from "@/lib/transactions/installments";
+import { resolveAppUrl } from "@/lib/app-url";
 
 export type { PaymentReminderKind } from "@/lib/email/templates/payment-reminder-email";
 
@@ -146,7 +147,7 @@ export async function processPaymentReminders(referenceDate = new Date()) {
       }
 
       const copy = getReminderCopy(reminderKind);
-      const appUrl = process.env.NEXT_PUBLIC_APP_URL ?? "http://localhost:3000";
+      const appUrl = resolveAppUrl();
       const paymentDateLabel = formatPaymentDateLabel(paymentDate);
       const amountLabel = formatCurrency(row.installmentAmount!);
       const installmentNumber = installmentIndex + 1;

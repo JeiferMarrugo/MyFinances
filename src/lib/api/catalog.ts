@@ -1,4 +1,5 @@
 import { appBrand } from "@/lib/branding";
+import { resolveAppUrl } from "@/lib/app-url";
 
 export type ApiEndpointDoc = {
   method: "GET" | "POST" | "PATCH" | "PUT" | "DELETE";
@@ -35,7 +36,7 @@ export type ApiCatalog = {
   endpoints: ApiEndpointDoc[];
 };
 
-const baseUrl = process.env.BETTER_AUTH_URL ?? "http://localhost:3000";
+const baseUrl = resolveAppUrl();
 
 export function getApiCatalog(): ApiCatalog {
   return {

@@ -6,8 +6,9 @@ import { db } from "@/db";
 import * as schema from "@/db/schema";
 import { appBrand } from "@/lib/branding";
 import { isGoogleAuthConfigured } from "@/lib/auth/providers";
+import { resolveAppUrl } from "@/lib/app-url";
 
-const appUrl = process.env.BETTER_AUTH_URL ?? "http://localhost:3000";
+const appUrl = resolveAppUrl();
 const passkeyRpId =
   process.env.BETTER_AUTH_PASSKEY_RP_ID ??
   (appUrl.includes("localhost") ? "localhost" : new URL(appUrl).hostname);

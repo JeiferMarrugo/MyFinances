@@ -2,11 +2,12 @@ import { createAuthClient } from "better-auth/react";
 import { passkeyClient } from "@better-auth/passkey/client";
 import { oneTapClient } from "better-auth/client/plugins";
 import { getGoogleClientId } from "@/lib/auth/providers";
+import { resolveClientAuthBaseUrl } from "@/lib/app-url";
 
 const googleClientId = getGoogleClientId();
 
 export const authClient = createAuthClient({
-  baseURL: process.env.NEXT_PUBLIC_APP_URL ?? "http://localhost:3000",
+  baseURL: resolveClientAuthBaseUrl(),
   plugins: [
     passkeyClient(),
     ...(googleClientId
